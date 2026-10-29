@@ -1,0 +1,65 @@
+{
+"id": "novw1",
+"label": "NOVW1",
+"start": "2026-10-29T01:32:00Z",
+"end": "2026-11-09T11:00:00Z",
+"goal": 50,
+"edGoal": 8,
+"updated": "Wed Oct 28, 8:33pm",
+"closed": false,
+"strategy": "Fresh week. B684, B685, B687 and B688 carry over from OCTW4 in Writing Copy. Strategy shows up here once briefs start landing.",
+"cards": [
+{
+"gid": "1219990664079105",
+"batch": "684",
+"name": "BATCH#684 - Lose Thirty Pounds Or No Knee Surgery (B418 Iteration)_AI",
+"done_at": "",
+"editor": "Claudiu",
+"type": "Iteration",
+"status": "Writing Copy",
+"url": "https://app.asana.com/1/1214440998397169/project/1214440440100467/task/1219990664079105",
+"angle": "Someone else tells her",
+"format": "Same as its winner",
+"cast": ""
+},
+{
+"gid": "1219990664324538",
+"batch": "685",
+"name": "BATCH#685 - Grandson Says Grandma's Pants Are Falling (B254 Iteration)_AI",
+"done_at": "",
+"editor": "Arsenii Sorokin",
+"type": "Iteration",
+"status": "Writing Copy",
+"url": "https://app.asana.com/1/1214440998397169/project/1214440440100467/task/1219990664324538",
+"angle": "Age & body",
+"format": "Same as its winner",
+"cast": ""
+},
+{
+"gid": "1219990557510453",
+"batch": "687",
+"name": "BATCH#687 - The Kiss Cam (Brand Imitation)_AI",
+"done_at": "",
+"editor": "MTA",
+"type": "Imitation",
+"status": "Writing Copy",
+"url": "https://app.asana.com/1/1214440998397169/project/1214440440100467/task/1219990557510453",
+"angle": "Other",
+"format": "Same as its winner",
+"cast": ""
+},
+{
+"gid": "1219990752069125",
+"batch": "688",
+"name": "BATCH#688 - Doctor's TED-Style Talk: Stop Telling Women To Eat Less (B418 Iteration)_AI",
+"done_at": "",
+"editor": "Claudiu",
+"type": "Iteration",
+"status": "Writing Copy",
+"url": "https://app.asana.com/1/1214440998397169/project/1214440440100467/task/1219990752069125",
+"angle": "Mechanism & education",
+"format": "Talking head / swipe",
+"cast": ""
+}
+]
+}

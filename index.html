@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>50 Briefs Tracker</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
+<style>
+:root{
+  --bg:#fbf7f9;--panel:#ffffff;--soft:#fdf0f5;--softer:#fbe1ec;--line:#f1d6e2;
+  --fg:#3a2430;--muted:#8a6d7b;--pink:#ec6fa1;--coral:#f7a07f;--lilac:#b79cf2;
+  --ok:#2f9e6e;--warn:#c97a12;--r:18px;
+  --serif:Georgia,"Times New Roman",serif;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#1c1519;--panel:#251c21;--soft:#2c2027;--softer:#3a2733;--line:#3d2c36;--fg:#f6e9ef;--muted:#b598a6;--ok:#5cc79a;--warn:#e3a54a;
+}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.45}
+.wrap{max-width:920px;margin:0 auto;padding:24px 16px 48px;display:flex;flex-direction:column;gap:18px}
+.head{text-align:center}
+.pill{display:inline-block;padding:4px 14px;border-radius:99px;background:var(--softer);font-size:12px;font-weight:600;letter-spacing:.06em}
+h1{font-family:var(--serif);font-weight:400;font-size:40px;line-height:1.1;margin:10px 0 0}
+.mot{margin:8px 0 0;font-size:19px}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:var(--r);padding:22px 18px}
+.card h2{font-size:17px;font-weight:600;margin:0}
+.note{color:var(--muted);font-size:12.5px;margin:4px 0 14px}
+.hero{display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap}
+.ring{position:relative;width:min(210px,64vw);aspect-ratio:1}
+.ring svg{width:100%;height:100%;display:block}
+.ring .arc{transition:stroke-dashoffset 1s ease-out}
+.ring-c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.big{font-family:var(--serif);font-size:58px;line-height:1}
+.of{color:var(--muted);font-size:12.5px;margin-top:4px}
+.side{display:flex;flex-direction:column;gap:12px;max-width:22rem}
+.side h3{font-family:var(--serif);font-weight:400;font-size:24px;margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px 12px;min-width:6.2rem}
+.chip b{display:block;font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.1}
+.chip span{font-size:12px;color:var(--muted)}
+.box{margin:0;padding:9px 12px;border-radius:14px;background:var(--panel);border:1px solid var(--line);font-size:14px}
+.box.ok{background:color-mix(in srgb,var(--ok) 14%,var(--panel))}
+.box.warn{background:color-mix(in srgb,var(--warn) 12%,var(--panel));font-size:13px}
+.muted{color:var(--muted)}
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));gap:18px}
+.strat h3{margin:0 0 8px;font-size:14px;font-weight:600}
+.srow{display:grid;grid-template-columns:1fr auto;gap:2px 8px;margin-bottom:8px;font-size:12.5px}
+.srow span:last-of-type{color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{grid-column:1/-1;height:8px;border-radius:99px;background:var(--softer);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--pink),var(--coral))}
+.eds{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:8px}
+.ed{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px 12px;display:flex;flex-direction:column;gap:5px}
+.ed-top{display:flex;justify-content:space-between;align-items:baseline}
+.ed-top b{font-weight:600}
+.ed-top span{font-family:var(--serif);font-size:18px}
+.ed-top small{color:var(--muted);font-family:var(--sans);font-size:12px}
+.dots{display:flex;gap:4px}
+.dots i{flex:1;height:8px;border-radius:99px;background:var(--softer)}
+.dots i.on{background:linear-gradient(90deg,var(--pink),var(--coral))}
+.dots i.over{background:var(--lilac)}
+.ed em{font-style:normal;font-size:12px;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--muted);margin-bottom:8px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.mrow{display:grid;grid-template-columns:4.6rem 1fr 2rem;gap:8px;align-items:center;margin-bottom:8px}
+.mrow>span:first-child{font-size:12px;color:var(--muted);font-weight:600}
+.mrow.now>span:first-child{color:var(--fg)}
+.mbar{display:flex;gap:3px;height:28px}
+.mbar div{display:flex;align-items:center;justify-content:center;min-width:22px;border-radius:8px;color:#fff;font-size:12px;font-weight:600}
+.mbar .empty{flex:1;border:1px dashed var(--line);color:var(--muted);background:none;font-weight:400}
+.mrow>span:last-child{text-align:right;font-size:12px;color:var(--muted)}
+.cols{display:flex;align-items:flex-end;gap:14px;height:200px;padding:18px 0 0;border-bottom:1px solid var(--line);position:relative}
+.col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px}
+.col b{font-weight:400;font-size:14px}
+.col i{display:block;width:min(56px,100%);border-radius:10px 10px 4px 4px;background:linear-gradient(180deg,var(--pink),var(--coral))}
+.col.cur i{outline:2px solid var(--fg);outline-offset:2px}
+.goal{position:absolute;left:0;right:0;border-top:1.5px dashed var(--pink);opacity:.8}
+.goal span{position:absolute;right:0;top:-18px;font-size:12px;color:var(--muted)}
+.xl{display:flex;gap:14px;margin-top:6px}
+.xl span{flex:1;text-align:center;font-size:12px;color:var(--muted);font-weight:600}
+.tbox{max-height:440px;overflow:auto;border-radius:12px;background:var(--panel);border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{position:sticky;top:0;background:var(--panel);text-align:left;color:var(--muted);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+td a{color:inherit;text-decoration:none}td a:hover{text-decoration:underline}
+.badge{display:inline-block;padding:2px 8px;border-radius:99px;background:color-mix(in srgb,var(--ok) 16%,var(--panel));color:var(--ok);font-weight:600;white-space:nowrap}
+.badge.wc{background:color-mix(in srgb,var(--warn) 16%,var(--panel));color:var(--warn)}
+.weeks{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.weeks a{padding:5px 12px;border-radius:99px;border:1px solid var(--line);color:var(--fg);text-decoration:none;font-size:12.5px;background:var(--panel)}
+.weeks a.on{background:var(--softer);font-weight:600}
+.foot{text-align:center;color:var(--muted);font-size:12px;margin:0}
+@media (max-width:560px){.hide-sm{display:none}.side{align-items:center;text-align:center}.chips{justify-content:center}h1{font-size:34px}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"><p class="foot">Loading…</p></div>
+<script>
+const $ = (tag, cls, txt) => { const n = document.createElement(tag); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
+const POD = [['Kay Bolla','Kay'],['Anre','Anre'],['sickwan','Sickwan'],['Arsenii Sorokin','Arsenii']];
+const SHORT = {'Kay Bolla':'Kay','sickwan':'Sickwan','Arsenii Sorokin':'Arsenii'};
+const bog = (iso) => new Date(Date.parse(iso) - 11 * 3600e3); // Bogota time, days roll over at 6am
+const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const typeKey = (t) => /iterat/i.test(t) ? 'iteration' : /imitat/i.test(t) ? 'imitation' : /ideat/i.test(t) ? 'ideation' : 'other';
+const MIX = [['iteration','Iterations','var(--pink)'],['imitation','Imitations','var(--lilac)'],['ideation','Ideation','var(--coral)'],['other','Untagged','#b9a7b0']];
+
+async function load() {
+  const idx = await (await fetch('data/weeks.json', {cache: 'no-store'})).json();
+  const want = new URLSearchParams(location.search).get('w') || idx.current;
+  const files = idx.weeks.filter((w) => w.file);
+  const loaded = {};
+  await Promise.all(files.map(async (w) => { loaded[w.id] = await (await fetch(w.file, {cache: 'no-store'})).json(); }));
+  const summary = idx.weeks.map((w) => {
+    if (!loaded[w.id]) return w;
+    const c = loaded[w.id].cards.filter((x) => x.done_at);
+    const s = {id: w.id, label: w.label, briefs: c.length, iteration: 0, imitation: 0, ideation: 0, other: 0};
+    c.forEach((x) => s[typeKey(x.type)]++);
+    return s;
+  });
+  render(loaded[want] || loaded[idx.current], summary, idx);
+}
+
+function render(W, summary, idx) {
+  const app = document.getElementById('app'); app.replaceChildren();
+  const done = W.cards.filter((c) => c.done_at).sort((a, b) => (a.done_at < b.done_at ? 1 : -1));
+  const writing = W.cards.filter((c) => !c.done_at);
+  const n = done.length, left = Math.max(0, W.goal - n);
+  const now = new Date();
+  const endMs = Date.parse(W.end);
+  const daysLeft = W.closed ? 0 : Math.max(1, Math.ceil((endMs - now.getTime()) / 864e5));
+
+  // header
+  const head = $('header', 'head');
+  head.append($('span', 'pill', W.label + (W.closed ? ' · done' : '')));
+  const h1 = $('h1', '', '🌸 50 Briefs'); head.append(h1);
+  const step = n >= W.goal ? 4 : n >= 40 ? 3 : n >= 25 ? 2 : n >= 10 ? 1 : 0;
+  head.append($('p', 'mot', ['Fresh week. Let\'s get it 💪','Building momentum ✨','Over halfway. Keep going 🔥','So close. Finish strong 🏁',(W.closed ? 'Week closed at ' + n + '. You did that 🎉' : n + ' done. You did that 🎉')][step]));
+  app.append(head);
+
+  // hero
+  const hero = $('section', 'card'); const h = $('div', 'hero');
+  const ring = $('div', 'ring'); const R = 86, C = 2 * Math.PI * R, share = Math.min(1, n / W.goal);
+  ring.innerHTML = `<svg viewBox="0 0 200 200"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ec6fa1"/><stop offset="1" stop-color="#f7a07f"/></linearGradient></defs><circle cx="100" cy="100" r="86" fill="none" stroke-width="18" stroke="var(--softer)"/><circle class="arc" cx="100" cy="100" r="86" fill="none" stroke-width="18" stroke-linecap="round" transform="rotate(-90 100 100)" stroke="url(#g)" stroke-dasharray="${C}" stroke-dashoffset="${C}" opacity="${share > 0 ? 1 : 0}"/></svg>`;
+  requestAnimationFrame(() => requestAnimationFrame(() => ring.querySelector('.arc').setAttribute('stroke-dashoffset', String(C * (1 - share)))));
+  const rc = $('div', 'ring-c'); rc.append($('span', 'big', String(n)), $('span', 'of', 'of ' + W.goal + ' briefs')); ring.append(rc);
+  const side = $('div', 'side');
+  if (n >= W.goal) { side.append($('h3', '', 'You did it 🎉'), $('p', 'box ok', 'You hit ' + W.goal + (W.closed ? ' in ' + W.label + '.' : ' this week. Go rest ✨'))); }
+  else if (W.closed) { side.append($('h3', '', W.label), $('p', 'box', 'Week closed at ' + n + '.')); }
+  else {
+    side.append($('h3', '', 'This week'));
+    const chips = $('div', 'chips');
+    [[left, 'to go'], [daysLeft, 'days left'], [Math.ceil(left / daysLeft), 'a day to hit it']].forEach(([v, l]) => { const c = $('div', 'chip'); c.append($('b', '', String(v)), $('span', '', l)); chips.append(c); });
+    side.append(chips);
+    const today = bog(now.toISOString()).toISOString().slice(0, 10);
+    side.append($('p', 'muted', 'Today so far: ' + done.filter((c) => bog(c.done_at).toISOString().slice(0, 10) === today).length + ' ✍️'));
+  }
+  if (writing.length) side.append($('p', 'box warn', '📝 ' + writing.length + ' of your cards are still in Writing Copy.'));
+  h.append(ring, side); hero.append(h); app.append(hero);
+
+  // strategy
+  const st = $('section', 'card'); st.append($('h2', '', W.label + ' strategy'), $('p', 'note', 'What the briefs you scripted went after'));
+  if (W.strategy) st.append($('p', 'box', '🎯 ' + W.strategy));
+  if (done.length) {
+    const grid = $('div', 'strat'); grid.style.marginTop = '14px';
+    const col = (title, counts, extra) => {
+      const c = $('div'); c.append($('h3', '', title));
+      const rows = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 6); const max = Math.max(1, ...rows.map((r) => r[1]));
+      rows.forEach(([k, v]) => { const r = $('div', 'srow'); const b = $('div', 'bar'); const i = $('i'); i.style.width = (v / max * 100) + '%'; b.append(i); r.append($('span', '', k), $('span', '', String(v)), b); c.append(r); });
+      if (extra) c.append($('p', 'note', extra));
+      return c;
+    };
+    const cnt = (f) => { const m = new Map(); done.forEach((c) => [].concat(f(c)).forEach((k) => k && m.set(k, (m.get(k) || 0) + 1))); return m; };
+    const winners = cnt((c) => [...new Set((c.name.replace(/^BATCH#\d+\s*-\s*/, '').match(/B\d{3}/g) || []))].filter((x) => x.slice(1) !== c.batch));
+    const black = done.filter((c) => c.cast).length;
+    grid.append(col('Angles', cnt((c) => c.angle || 'Untagged')), col('Winners you milked', winners), col('Formats', cnt((c) => c.format || 'Untagged'), black ? black + ' were Black cast versions' : ''));
+    st.append(grid);
+  }
+  app.append(st);
+
+  // editors
+  const ed = $('section', 'card'); ed.append($('h2', '', 'Per editor'), $('p', 'note', 'Your scripted cards by who they\'re assigned to, against ' + W.edGoal + ' each'));
+  const em = new Map(); done.forEach((c) => em.set(c.editor, (em.get(c.editor) || 0) + 1));
+  const list = POD.map(([a, l]) => ({l, v: em.get(a) || 0})).concat([...em.entries()].filter(([a]) => !POD.some(([p]) => p === a)).map(([a, v]) => ({l: SHORT[a] || a, v}))).sort((a, b) => b.v - a.v);
+  const eds = $('div', 'eds');
+  list.forEach(({l, v}) => {
+    const c = $('div', 'ed'); const t = $('div', 'ed-top'); const s = $('span', '', String(v)); s.append($('small', '', ' / ' + W.edGoal)); t.append($('b', '', l), s);
+    const d = $('div', 'dots'); for (let i = 0; i < Math.max(W.edGoal, v); i++) d.append($('i', i < Math.min(v, W.edGoal) ? 'on' : (i < v ? 'over' : '')));
+    const lft = W.edGoal - v; c.append(t, d, $('em', '', lft > 0 ? lft + ' more to give them' : lft === 0 ? 'Full ✨' : Math.abs(lft) + ' over')); eds.append(c);
+  });
+  ed.append(eds); app.append(ed);
+
+  // mix
+  const mx = $('section', 'card'); mx.append($('h2', '', 'Iterations vs new ideas'), $('p', 'note', 'Briefs per week by Brief Type'));
+  const shown = summary.slice().reverse();
+  const prev = summary[summary.findIndex((s) => s.id === W.id) - 1];
+  if (prev && prev.briefs) {
+    const sh = prev.iteration / Math.max(1, prev.iteration + prev.imitation + prev.ideation);
+    mx.append($('p', 'box', sh < 0.4 ? '🥛 ' + prev.label + ' was heavy on imitations and ideation. Lean on iterations and milk the winners.' : sh > 0.6 ? '💡 ' + prev.label + ' was mostly iterations. Time for some fresh imitations and ideas.' : '👌 ' + prev.label + ' was a good mix. Keep it balanced.'));
+  }
+  const lg = $('div', 'legend'); MIX.slice(0, 3).forEach(([, l, c]) => { const s = $('span'); const i = $('i'); i.style.background = c; s.append(i, l); lg.append(s); }); lg.style.marginTop = '12px'; mx.append(lg);
+  shown.forEach((s) => {
+    const r = $('div', 'mrow' + (s.id === W.id ? ' now' : '')); r.append($('span', '', s.label));
+    const b = $('div', 'mbar'); MIX.forEach(([k, l, c]) => { if (!s[k]) return; const d = $('div', '', String(s[k])); d.style.flex = s[k]; d.style.background = c; d.title = l + ': ' + s[k]; b.append(d); });
+    if (!s.briefs) b.append($('div', 'empty', 'nothing yet'));
+    r.append(b, $('span', '', String(s.briefs || 0))); mx.append(r);
+  });
+  app.append(mx);
+
+  // weekly columns
+  const wk = $('section', 'card'); wk.append($('h2', '', 'Briefs per week'), $('p', 'note', 'Weeks that hit ' + W.goal + ' get a star'));
+  const last = summary.slice(-5); const top = Math.max(W.goal, ...last.map((s) => s.briefs || 0)) * 1.15;
+  const cols = $('div', 'cols'); const g = $('div', 'goal'); g.style.bottom = (W.goal / top * 100) + '%'; g.append($('span', '', '🎯 ' + W.goal)); cols.append(g);
+  const xl = $('div', 'xl');
+  last.forEach((s) => { const c = $('div', 'col' + (s.id === W.id ? ' cur' : '')); const i = $('i'); i.style.height = ((s.briefs || 0) / top * 100) + '%'; c.append($('b', '', ((s.briefs || 0) >= W.goal ? '⭐ ' : '') + (s.briefs || 0)), i); cols.append(c); xl.append($('span', '', s.label)); });
+  wk.append(cols, xl); app.append(wk);
+
+  // table
+  const tb = $('section', 'card'); tb.append($('h2', '', 'Your cards'), $('p', 'note', 'Scripted ones newest first, then anything still in Writing Copy. Tap a name to open it in Asana.'));
+  const box = $('div', 'tbox'); const t = $('table'); const hr = $('tr');
+  [['Batch'], ['Card'], ['Done'], ['Editor'], ['Type', 'hide-sm']].forEach(([x, c]) => hr.append($('th', c || '', x))); const th = $('thead'); th.append(hr); t.append(th);
+  const body = $('tbody');
+  done.concat(writing).forEach((c) => {
+    const tr = $('tr'); const nm = $('td'); const a = $('a', '', c.name.replace(/^BATCH#\d+\s*-\s*/, '')); if (/^https:\/\/app\.asana\.com\//.test(c.url)) { a.href = c.url; a.target = '_blank'; a.rel = 'noopener'; } nm.append(a);
+    const dn = $('td'); dn.append($('span', c.done_at ? 'badge' : 'badge wc', c.done_at ? DAYS[bog(c.done_at).getUTCDay()] : 'Writing'));
+    tr.append($('td', 'muted', c.batch), nm, dn, $('td', '', SHORT[c.editor] || c.editor), $('td', 'hide-sm', c.type)); body.append(tr);
+  });
+  t.append(body); box.append(t); tb.append(box); app.append(tb);
+
+  // week switcher + footer
+  const ws = $('nav', 'weeks');
+  idx.weeks.filter((w) => w.file).forEach((w) => { const a = $('a', w.id === W.id ? 'on' : '', w.label); a.href = w.id === idx.current ? './' : '?w=' + w.id; ws.append(a); });
+  app.append(ws, $('p', 'foot', 'A brief counts when your card goes from Writing Copy to Ready To Be Edited. Days roll over at 6am. Snapshot from ' + W.updated + '.'));
+}
+load().catch((e) => { document.getElementById('app').replaceChildren($('p', 'foot', 'Couldn\'t load the data. Try refreshing.')); console.error(e); });
+</script>
+</body>
+</html>

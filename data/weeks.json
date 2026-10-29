@@ -1,0 +1,45 @@
+{
+ "current": "novw1",
+ "weeks": [
+  {
+   "id": "octw1",
+   "label": "OCTW1",
+   "briefs": 26,
+   "iteration": 6,
+   "imitation": 16,
+   "ideation": 4,
+   "other": 0,
+   "file": null
+  },
+  {
+   "id": "octw2",
+   "label": "OCTW2",
+   "briefs": 21,
+   "iteration": 6,
+   "imitation": 5,
+   "ideation": 10,
+   "other": 0,
+   "file": null
+  },
+  {
+   "id": "octw3",
+   "label": "OCTW3",
+   "briefs": 29,
+   "iteration": 7,
+   "imitation": 10,
+   "ideation": 12,
+   "other": 0,
+   "file": null
+  },
+  {
+   "id": "octw4",
+   "label": "OCTW4",
+   "file": "data/octw4.json"
+  },
+  {
+   "id": "novw1",
+   "label": "NOVW1",
+   "file": "data/novw1.json"
+  }
+ ]
+}
