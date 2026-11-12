@@ -101,7 +101,7 @@ const SHORT = {'Kay Bolla':'Kay','sickwan':'Sickwan','Arsenii Sorokin':'Arsenii'
 const bog = (iso) => new Date(Date.parse(iso) - 11 * 3600e3); // Bogota time, days roll over at 6am
 const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const typeKey = (t) => /iterat/i.test(t) ? 'iteration' : /imitat/i.test(t) ? 'imitation' : /ideat/i.test(t) ? 'ideation' : 'other';
-const PLAYBOOKS = [['🌸 Ovia','https://claude.ai/artifact/LKankTecPwLo9xC2FQCz9T'],['🧄 Garlic (Resilia AOG)','https://claude.ai/artifact/Si15c2zBTTYAYfLiku7rxW'],['🍂 Cinnamon (Resilia CIN)','https://claude.ai/artifact/SXVi5EG81qaRwohMBWX55F']];
+const PLAYBOOKS = [['🌸 Ovia','playbooks/ovia.html'],['🧄 Garlic (Resilia AOG)','playbooks/garlic.html'],['🍂 Cinnamon (Resilia CIN)','playbooks/cinnamon.html']];
 const MIX = [['iteration','Iterations','var(--pink)'],['imitation','Imitations','var(--lilac)'],['ideation','Ideation','var(--coral)'],['other','Untagged','#b9a7b0']];
 
 async function load() {
@@ -229,7 +229,7 @@ function render(W, summary, idx) {
   // winners playbooks
   const pb = $('section', 'card'); pb.append($('h2', '', 'Winners playbooks'), $('p', 'note', 'What the winners share, every winner broken down, and what to port first'));
   const pl = $('div', 'weeks'); pl.style.justifyContent = 'flex-start';
-  PLAYBOOKS.forEach(([l, u]) => { const a = $('a', '', l); a.href = u; a.target = '_blank'; a.rel = 'noopener'; pl.append(a); });
+  PLAYBOOKS.forEach(([l, u]) => { const a = $('a', '', l); a.href = u; pl.append(a); });
   pb.append(pl); app.append(pb);
 
   // week switcher + footer
